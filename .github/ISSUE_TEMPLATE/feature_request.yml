@@ -1,0 +1,36 @@
+name: Feature request
+description: Suggest something Luna doesn't do yet.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing: `ARCHITECTURE.md` keeps an honest list of known
+        gaps (unreachable onboarding, client-only "forget," dead
+        `CALL_WARN_SECONDS`, no self-serve account deletion, and more) —
+        worth a skim in case what you want is already tracked there.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: What are you trying to do that the current app doesn't support?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: As specific as you can be — an API shape, a UI sketch, an env var. Rough ideas are fine too.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: safety-touch
+    attributes:
+      label: Does this touch safety-critical territory?
+      description: Crisis detection, crisis copy, or memory/data handling. See CLAUDE.md's safety-critical code section.
+      options:
+        - label: This would change crisis detection, crisis copy, the /safety page, or memory/data handling.
+          required: false

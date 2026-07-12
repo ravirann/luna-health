@@ -1,0 +1,31 @@
+# Local environment files
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Python environments and caches
+.venv/
+.venv.*/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Runtime output
+*.log
+recordings/
+tmp/
+temp/
+
+# OS/editor noise
+.DS_Store
+*.swp
+*.swo
+.DS_Store

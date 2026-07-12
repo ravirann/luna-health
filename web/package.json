@@ -1,0 +1,51 @@
+{
+  "name": "luna-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "NODE_OPTIONS='--max-old-space-size=8192' next dev --webpack",
+    "dev:turbo": "NODE_OPTIONS='--max-old-space-size=8192' next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "db:generate": "dotenv -e .env.local -e .env -- drizzle-kit generate",
+    "db:push": "dotenv -e .env.local -e .env -- drizzle-kit push",
+    "db:migrate": "dotenv -e .env.local -e .env -- drizzle-kit migrate",
+    "db:studio": "dotenv -e .env.local -e .env -- drizzle-kit studio",
+    "dev:reset": "dotenv -e .env.local -e .env -- npx tsx scripts/dev-reset.ts reset",
+    "dev:nuke": "dotenv -e .env.local -e .env -- npx tsx scripts/dev-reset.ts nuke",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "eval": "vitest run --config vitest.eval.config.ts"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "@pipecat-ai/client-js": "^1.7.0",
+    "@pipecat-ai/small-webrtc-transport": "^1.10.0",
+    "clsx": "^2.1.1",
+    "drizzle-orm": "^0.45.2",
+    "next": "16.2.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "svix": "^1.92.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitest/ui": "^2.1.9",
+    "dotenv": "^17.4.2",
+    "dotenv-cli": "^11.0.0",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "jsdom": "^25.0.1",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^2.1.9"
+  }
+}

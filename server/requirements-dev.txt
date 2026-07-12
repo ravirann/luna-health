@@ -1,0 +1,8 @@
+# Dev-only dependencies — not needed to run the bot, only to test it.
+# Install alongside requirements.txt:
+#   pip install -r requirements.txt -r requirements-dev.txt
+#
+# The test suite (server/tests/) uses unittest.IsolatedAsyncioTestCase for
+# async tests, which pytest runs natively — no pytest-asyncio/anyio plugin
+# is required.
+pytest>=8.0.0

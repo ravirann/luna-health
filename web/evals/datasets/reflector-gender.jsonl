@@ -1,0 +1,14 @@
+{"id":"fem-hindi-verb","note":"feminine self-cue (thaki hui)","transcript":"USER: aaj main bahut thaki hui hoon, kaam zyada tha\nASSISTANT: lagta hai lambi shift thi. kya hua?","expected":"feminine"}
+{"id":"masc-hindi-verb","note":"masculine self-cue (gaya tha)","transcript":"USER: kal raat main dost ke ghar gaya tha, der ho gayi\nASSISTANT: achha, kaisa raha?","expected":"masculine"}
+{"id":"fem-karti","note":"feminine self-cue (karti hoon)","transcript":"USER: main akeli feel karti hoon in dino\nASSISTANT: main yahin hoon, batao kya chal raha hai","expected":"feminine"}
+{"id":"masc-karta","note":"masculine self-cue (karta hoon)","transcript":"USER: kabhi kabhi main bilkul akela feel karta hoon\nASSISTANT: samajh sakti hoon. kab se aisa lag raha hai?","expected":"masculine"}
+{"id":"fem-explicit-en","note":"explicit statement, English","transcript":"USER: just so you know, I'm a woman\nASSISTANT: thanks for telling me. what's on your mind tonight?","expected":"feminine"}
+{"id":"masc-explicit-en","note":"explicit statement, English","transcript":"USER: as a guy I was never taught to talk about this stuff\nASSISTANT: that makes sense. you can take it slowly here.","expected":"masculine"}
+{"id":"neutral-pronoun","note":"explicit request for they/them","transcript":"USER: please use they/them for me\nASSISTANT: of course. how has your day been?","expected":"neutral"}
+{"id":"neutral-nb","note":"non-binary self-identification","transcript":"USER: I'm non-binary, hope that's okay\nASSISTANT: completely okay. I'm glad you're here.","expected":"neutral"}
+{"id":"unknown-name-only","note":"name only — NOT enough to infer gender","transcript":"USER: hi, I'm Priya\nASSISTANT: hi Priya. what brought you here tonight?","expected":"unknown"}
+{"id":"unknown-en-nocue","note":"English, no gendered cue","transcript":"USER: work has been stressful and I can't switch off\nASSISTANT: that sounds heavy. what part is loudest right now?","expected":"unknown"}
+{"id":"unknown-hindi-neutral","note":"neutral Hindi (theek hoon), no gendered self-cue","transcript":"USER: main theek hoon, just wanted to talk for a bit\nASSISTANT: I'm here, take your time.","expected":"unknown"}
+{"id":"unknown-wife-trap","note":"mentions wife — relationship is NOT a self-cue","transcript":"USER: my wife and I had a fight and I don't know what to do\nASSISTANT: that's hard. what happened?","expected":"unknown"}
+{"id":"unknown-empty","note":"almost no content","transcript":"USER: hi\nASSISTANT: hey, I'm here. take your time.","expected":"unknown"}
+{"id":"masc-multiturn","note":"masculine cue appears later in the conversation","transcript":"ASSISTANT: how are you holding up?\nUSER: thoda low\nASSISTANT: kya hua?\nUSER: kal main office nahi gaya, mann nahi tha","expected":"masculine"}

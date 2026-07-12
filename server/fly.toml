@@ -1,0 +1,64 @@
+# Luna AI — pipecat bot on Fly.io
+#
+# Machine-per-call cost model:
+#   * min_machines_running = 0  → no charge when nobody is calling
+#   * auto_stop_machines = "suspend" → restart in <1s when a request comes in
+#     (vs ~5-10s for "stop"); machine state is checkpointed to disk
+#   * soft_limit = 2 → Fly creates a new machine when one is handling 2
+#     concurrent calls; absolute cap at hard_limit
+#
+# At idle = $0/mo. At 1k calls/day @ ~5min each ≈ $20-30/mo on shared-cpu-2x.
+
+app = "luna-bot"
+primary_region = "bom"          # Mumbai — minimum RTT for Indian users
+kill_signal = "SIGTERM"
+kill_timeout = "30s"            # let in-flight calls flush + upload audio
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "7860"
+  REQUIRE_BOT_SESSION = "true"
+  # Keep loguru lean in prod; keep Sarvam SDK compact too.
+  LOGURU_LEVEL = "INFO"
+
+# ---- HTTP service: the SmallWebRTC offer endpoint ------------------------
+# WebRTC media itself flows over UDP via the machine's public IPv6/IPv4.
+# pipecat's SmallWebRTCTransport handles ICE candidate exchange. Fly
+# machines expose UDP transparently; no extra port mapping required.
+
+[http_service]
+  internal_port = 7860
+  force_https = true
+  auto_stop_machines = "suspend"   # snapshot to disk on idle (fast resume)
+  auto_start_machines = true       # wake when /api/offer is hit
+  min_machines_running = 0         # scale-to-zero
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 2                 # spawn another machine past 2 calls
+    hard_limit = 6                 # absolute ceiling per machine
+
+# ---- Health checks --------------------------------------------------------
+# Fly probes the runner's static index — 200 means the FastAPI app is up.
+# A failure parks the machine until the next manual deploy.
+
+[[http_service.checks]]
+  grace_period = "20s"
+  interval     = "30s"
+  method       = "GET"
+  path         = "/"
+  timeout      = "5s"
+
+# ---- VM size --------------------------------------------------------------
+# 2 shared CPUs handle 2 concurrent Sarvam pipelines comfortably.
+# 1 GB RAM fits silero VAD (~150 MB) + smart-turn ONNX (~80 MB) + per-call
+# pipeline state (<150 MB each).
+
+[[vm]]
+  size      = "shared-cpu-2x"
+  memory    = "1gb"
+  cpu_kind  = "shared"
+  cpus      = 2

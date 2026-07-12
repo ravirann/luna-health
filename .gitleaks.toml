@@ -1,0 +1,18 @@
+# Gitleaks config for Luna.
+#
+# Extends the default ruleset. The only allowance: env-template lines that
+# assign an EMPTY string (FOO="") — the checked-in .env.example files are
+# full of these and the generic-api-key rule trips on the variable names.
+# A real value pasted into an example file still gets flagged; keep it
+# that way.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Empty-string assignments in checked-in env templates"
+# The detector's match region can span into the next line's variable name;
+# allow only <NAME>="" optionally followed by a bare name fragment — any
+# actual value after the = still gets flagged.
+regexTarget = "match"
+regexes = ['''\A[A-Z0-9_]+=(?:""|'')(?:\n[A-Z0-9_]{0,40}(?:=(?:"|')?)?)?\z''']

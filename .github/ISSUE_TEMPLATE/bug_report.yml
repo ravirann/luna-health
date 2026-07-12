@@ -1,0 +1,62 @@
+name: Bug report
+description: Something in a self-hosted Luna isn't working as expected.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug. If this is a **security vulnerability**
+        (auth bypass, injection, data exposure, etc.), please don't file it
+        here — use the private reporting process in `SECURITY.md` instead.
+
+        If this involves a wrong or unreachable **crisis resource** (a
+        phone number, a broken link on `/safety`), please flag that clearly
+        in the title — it gets treated with the same urgency as a security
+        issue.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps to hit this from a clean checkout, if you can.
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Commit or version
+      description: Commit SHA, tag, or "latest main" — whatever you have.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Where does this live?
+      multiple: true
+      options:
+        - web (Next.js app)
+        - server (Pipecat bot)
+        - Deployment / docker-compose
+        - Docs
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Browser console, `server/` log output, etc. Redact anything personal — transcripts, emails, tokens.
+      render: text
+    validations:
+      required: false

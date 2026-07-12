@@ -1,0 +1,16 @@
+{
+  "name": "Luna",
+  "short_name": "Luna",
+  "description": "A voice companion for late-night conversations.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0220",
+  "theme_color": "#0d0220",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/marketing/notification-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "monochrome" }
+  ]
+}

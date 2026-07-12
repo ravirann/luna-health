@@ -1,0 +1,58 @@
+services:
+  caddy:
+    image: caddy:2.8-alpine
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:-localhost}
+      BOT_DOMAIN: ${BOT_DOMAIN:-bot.localhost}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+      - bot
+
+  web:
+    # Override WEB_IMAGE to pull a prebuilt image from your registry in prod
+    # (`docker compose pull && up -d`). `docker compose build web` builds
+    # the image locally from ./web for local dev or a manual rebuild.
+    image: ${WEB_IMAGE:-luna-web:latest}
+    build:
+      context: ./web
+      args:
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://localhost}
+        NEXT_PUBLIC_BOT_URL: ${BOT_PUBLIC_URL:-https://bot.localhost}
+        NEXT_PUBLIC_BRAND_NAME: ${NEXT_PUBLIC_BRAND_NAME:-luna}
+        NEXT_PUBLIC_BOT_NAME: ${NEXT_PUBLIC_BOT_NAME:-}
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    env_file:
+      - ./web/.env
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://localhost}
+      BOT_PUBLIC_URL: ${BOT_PUBLIC_URL:-https://bot.localhost}
+      BOT_INTERNAL_URL: http://host.docker.internal:7860
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - bot
+
+  bot:
+    image: ${BOT_IMAGE:-luna-bot:latest}
+    build:
+      context: ./server
+    restart: unless-stopped
+    network_mode: host
+    env_file:
+      - ./server/.env
+    environment:
+      NEXT_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://localhost}
+      REQUIRE_BOT_SESSION: "true"
+
+volumes:
+  caddy_data:
+  caddy_config:
